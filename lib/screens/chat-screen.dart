@@ -12,13 +12,15 @@ class ChatScreen extends StatelessWidget {
             .collection('chats/un7C2ehy4oIeZYD77rxc/messages')
             .snapshots(),
         builder: (ctx, streamSnapshot) {
-          if(streamSnapshot.connectionState==ConnectionState.waiting){
-            return Center(child: CircularProgressIndicator(),);
+          if (streamSnapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
-          final documents=streamSnapshot.data?.docs;
+          final documents = streamSnapshot.data?.docs;
           return ListView.builder(
             itemBuilder: (ctx, index) => Container(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Text(documents![index]['text']),
             ),
             itemCount: documents?.length,
@@ -26,11 +28,11 @@ class ChatScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () async {
-          FirebaseFirestore.instance.collection('chats/un7C2ehy4oIeZYD77rxc/messages').add({
-              'text':'This was added by clicking the button'
-          });
+          FirebaseFirestore.instance
+              .collection('chats/un7C2ehy4oIeZYD77rxc/messages')
+              .add({'text': 'This was added by clicking the button'});
         },
       ),
     );
