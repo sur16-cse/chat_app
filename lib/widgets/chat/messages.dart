@@ -13,10 +13,17 @@ class Messages extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-        final chatDocs=chatSnapshot.data?.docs;
-        return ListView.builder(itemBuilder: (ctx,index)=>Text(chatDocs![index]['text']),itemCount: chatDocs?.length,);
+        final chatDocs = chatSnapshot.data?.docs;
+        return ListView.builder(
+          reverse: true,
+          itemBuilder: (ctx, index) => Text(chatDocs![index]['text']),
+          itemCount: chatDocs?.length,
+        );
       },
-      stream: FirebaseFirestore.instance.collection('chat').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('chat')
+          .orderBy('createdAt', descending: true)
+          .snapshots(),
     );
   }
 }
