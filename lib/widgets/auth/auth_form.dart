@@ -1,7 +1,8 @@
+import 'package:chat_app/widgets/pickers/user_image_picker.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
-  const AuthForm(this.submitFn, this.isLoading);
+  const AuthForm(this.submitFn, this.isLoading, {super.key});
   final bool isLoading;
   final void Function(
     String email,
@@ -52,6 +53,7 @@ class _AuthFormState extends State<AuthForm> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  UserImagePicker(),
                   TextFormField(
                     validator: (value) {
                       if (value!.isEmpty || !value.contains('@')) {
@@ -97,24 +99,23 @@ class _AuthFormState extends State<AuthForm> {
                   const SizedBox(
                     height: 12,
                   ),
-                  if(widget.isLoading)
-                    CircularProgressIndicator(),
-                  if(!widget.isLoading)
-                  ElevatedButton(
-                    onPressed: _trySubmit,
-                    child: Text(_isLogin ? 'Login' : 'Signup'),
-                  ),
-                  if(!widget.isLoading)
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _isLogin = !_isLogin;
-                      });
-                    },
-                    child: Text(_isLogin
-                        ? 'create new account'
-                        : 'Already have an account'),
-                  ),
+                  if (widget.isLoading) const CircularProgressIndicator(),
+                  if (!widget.isLoading)
+                    ElevatedButton(
+                      onPressed: _trySubmit,
+                      child: Text(_isLogin ? 'Login' : 'Signup'),
+                    ),
+                  if (!widget.isLoading)
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _isLogin = !_isLogin;
+                        });
+                      },
+                      child: Text(_isLogin
+                          ? 'create new account'
+                          : 'Already have an account'),
+                    ),
                 ],
               ),
             ),
